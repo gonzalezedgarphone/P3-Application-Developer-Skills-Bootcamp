@@ -4,7 +4,9 @@ from datetime import datetime
 from typing import List, Dict, Optional
 import json
 from pathlib import Path
-from player import Player
+
+from models.player import Player
+
 
 MAX_ROUNDS = 4
 
@@ -54,7 +56,7 @@ class Tournament:
             rounds=data.get("rounds", []),
             filepath=filepath
         )
-        tournament.tournaments.append(tournament)  # Append the created tournament to the tournaments list
+        tournament.tournaments.append(tournament)  # Append the created tournament to the class-level tournaments list
         return tournament
 
     @classmethod
@@ -134,8 +136,8 @@ class Tournament:
         return tournaments
 
     def save_tournaments(self):
-        base_dir = Path(__file__).resolve().parent.parent  # base directory load_from_folder
-        data_folder = base_dir / "data" / "tournaments"  # path to tournaments folder
+        base_dir = Path(__file__).resolve().parent.parent  # Get the base directory as in load_from_folder
+        data_folder = base_dir / "data" / "tournaments"  # Construct the path to the tournaments folder
         for tournament in self.tournaments:
             file_path = data_folder / f"{tournament.name.replace(' ', '_')}.json"
             with open(file_path, "w") as fp:
@@ -149,17 +151,20 @@ class Tournament:
         for i, tournament in enumerate(sorted_tournaments, start=1):
             print(f"Tournament {i}: {tournament.name}")
 
-    def get_tournament_by_index(self, index: int) -> Optional['Tournament']:
+    def get_tournament_by_index(self, index: int) -> Optional['Tournament']:  # Change made here
         if 1 <= index <= len(self.tournaments):
-            return self.tournaments[index - 1]
+            return self.tournaments[index - 1]  # Adjust index to 0-based
         else:
             print("Invalid tournament index.")
             return None
 
     def register_player(self, **player_attrs):
         new_player = Player(**player_attrs)
+        # Convert the registered_players list to a set
         player_set = set(self.registered_players)
+        # Add the new player to the set
         player_set.add(new_player)
+        # Convert the set back to a list
         self.registered_players = list(player_set)
 
     def display_info(self):
@@ -199,17 +204,17 @@ class Tournament:
 
 
 def main():
-
+    # Construct the absolute path to the tournaments folder
     folder_path = Path(__file__).resolve().parent.parent / "data" / "tournaments"
 
     if not folder_path.exists() or not folder_path.is_dir():
         print("Tournaments folder not found or is not a directory.")
         return
 
-
+    # Use the class method correctly
     tournaments = Tournament.load_tournaments_from_folder(folder_path)
 
-
+    # Display information about loaded tournaments
     for i, tournament in enumerate(tournaments, start=1):
         print(f"Tournament {i}:")
         tournament.display_info()

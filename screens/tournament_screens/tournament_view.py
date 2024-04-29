@@ -1,16 +1,15 @@
 from ..base_screen import BaseScreen
-
 class TournamentView(BaseScreen):
     def __init__(self, tournament):
         self.tournament = tournament
 
     def run(self):
-        # Display tournament information
         self.display_tournament_info()
-        # Optionally, you can add more functionality here
+        # Handle the tournament logic here (e.g., managing rounds)
 
     def display_tournament_info(self):
-        # Display tournament details
         print("Tournament Information:")
         print(f"Name: {self.tournament.name}")
-        # Display other tournament details
+        print(f"Venue: {self.tournament.venue}")
+        print(f"Dates: {self.tournament.start_date} to {self.tournament.end_date}")
+        # Add more details and options for matches, rounds etc.

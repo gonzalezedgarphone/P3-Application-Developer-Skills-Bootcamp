@@ -2,7 +2,8 @@
 
 import random
 from typing import List, Tuple
-from player import Player
+from models.player import Player
+
 
 
 class TournamentOperations:
@@ -30,6 +31,7 @@ class TournamentOperations:
                     opponent = players[j]
                     if ((player1.name, opponent.name) not in previous_pairings and
                             (opponent.name, player1.name) not in previous_pairings):
+                        # Found a valid opponent
                         player2 = opponent
                         break
 
@@ -42,7 +44,7 @@ class TournamentOperations:
                 # Update previous pairings
                 previous_pairings.add((player1.name, player2.name))
 
-        # Handle unpaired players
+        # Handle unpaired players (if odd number of players)
         unpaired_players = [player for player in players if player not in matched_players]
         for player in unpaired_players:
             pairings.append((player, None))

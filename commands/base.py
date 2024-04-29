@@ -14,3 +14,4 @@ class BaseCommand(metaclass=ABCMeta):
     def __call__(self):
         """Syntactic sugar: calling the instance calls its execute() method"""
         return self.execute()
+
