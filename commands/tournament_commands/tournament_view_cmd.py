@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from ..models.tournament import Tournament
+from models.tournament import Tournament
 
 
 @dataclass

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, List
-from ..models.tournament import Tournament
+from models.tournament import Tournament
 
 
 @dataclass

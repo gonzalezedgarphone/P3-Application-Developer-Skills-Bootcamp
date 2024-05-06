@@ -7,6 +7,11 @@ from .base import BaseCommand
 from .club_list import ClubListCmd
 from .create_club import ClubCreateCmd
 from .exit import ExitCmd
+from .tournament_commands import TournamentListCmd
+from .tournament_commands import TournamentCreateCmd
+from .tournament_commands import TournamentUpdateCmd
+from .tournament_commands import TournamentViewCmd
+
 __all__ = [
     "ClubCreateCmd",
     "ExitCmd",
@@ -14,5 +19,9 @@ __all__ = [
     "NoopCmd",
     "PlayerUpdateCmd",
     "BaseCommand",
+"TournamentListCmd",
+    "TournamentCreateCmd",
+    "TournamentUpdateCmd",
+    "TournamentViewCmd",
 
 ]
