@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from models.tournament import Tournament
 from pathlib import Path
-
 @dataclass
 class TournamentListCmd:
     """
@@ -17,5 +16,5 @@ class TournamentListCmd:
         return {
             'screen': 'tournament-menu',
             'run': True,
-            'tournaments': tournaments  # This should be the actual list of Tournament instances
+            'tournaments': tournaments
         }
