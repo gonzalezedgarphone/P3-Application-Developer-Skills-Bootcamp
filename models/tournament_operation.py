@@ -1,14 +1,20 @@
-# tournament_utils.py
-
 import random
 from typing import List, Tuple
-from models.player import Player
-
-
+from models import Tournament
+from models.tournament import PlayerDetails
 
 class TournamentOperations:
+
     @staticmethod
-    def generate_swiss_pairings(players: List[Player], previous_pairings: set = None) -> List[Tuple[Player, Player]]:
+    def generate_pairings_from_tournament(tournament: Tournament, previous_pairings: set = None) -> List[Tuple[PlayerDetails, PlayerDetails]]:
+        if previous_pairings is None:
+            previous_pairings = set()
+
+        registered_players = tournament.registered_players
+        return TournamentOperations.generate_swiss_pairings(registered_players, previous_pairings)
+
+    @staticmethod
+    def generate_swiss_pairings(players: List[PlayerDetails], previous_pairings: set = None) -> List[Tuple[PlayerDetails, PlayerDetails]]:
         if previous_pairings is None:
             previous_pairings = set()
 
@@ -25,7 +31,7 @@ class TournamentOperations:
 
             # Check if this pair has already played together
             if player2 is not None and ((player1.name, player2.name) in previous_pairings or
-                                         (player2.name, player1.name) in previous_pairings):
+                                        (player2.name, player1.name) in previous_pairings):
                 # Find a different opponent for player1
                 for j in range(i + 2, len(players)):
                     opponent = players[j]
@@ -52,7 +58,7 @@ class TournamentOperations:
         return pairings
 
     @staticmethod
-    def play_round(pairings: List[Tuple[Player, Player]]) -> List[Tuple[Player, Player, str]]:
+    def play_round(pairings: List[Tuple[PlayerDetails, PlayerDetails]]) -> List[Tuple[PlayerDetails, PlayerDetails, str]]:
         results = []
         for player1, player2 in pairings:
             if player2 is None:
@@ -72,11 +78,11 @@ class TournamentOperations:
         return results
 
     @staticmethod
-    def sort_players(players: List[Player]) -> List[Player]:
+    def sort_players(players: List[PlayerDetails]) -> List[PlayerDetails]:
         return sorted(players, key=lambda x: x.points, reverse=True)
 
     @staticmethod
-    def print_rankings(players: List[Player]):
+    def print_rankings(players: List[PlayerDetails]):
         print("Rankings:")
         for i, player in enumerate(players, 1):
             print(f"{i}. {player.name}: {player.points} points : player id {player.chess_id}")

@@ -1,12 +1,12 @@
 from commands import ExitCmd, NoopCmd
-
+from commands.context import Context
 from .base_screen import BaseScreen
 
 
 class MainMenu(BaseScreen):
     """Main menu screen"""
 
-    def __init__(self, clubs):
+    def __init__(self, clubs=None):
         self.clubs = clubs
 
     def display(self):
@@ -25,4 +25,4 @@ class MainMenu(BaseScreen):
             elif value.upper() == "C":
                 return NoopCmd("club-create")
             elif value.upper() == "X":
-                return ExitCmd()
+                return Context(run=False)

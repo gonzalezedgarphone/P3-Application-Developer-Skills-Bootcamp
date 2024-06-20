@@ -1,0 +1,28 @@
+{
+    "name": "Pismo",
+    "venue": "Pismo Hall",
+    "dates": {
+        "from": "22-01-2024",
+        "to": "23-01-2024"
+    },
+    "players": [
+        {
+            "name": "Jules",
+            "email": "jules@yahoo.com",
+            "chess_id": "NM32324",
+            "birthday": "01-08-1980"
+        },
+        {
+            "name": "Edgar",
+            "email": "edgond@gmail.com",
+            "chess_id": "MN2323",
+            "birthday": "11-22-1990"
+        }
+    ],
+    "number_of_rounds": 4,
+    "current_round": 1,
+    "completed": false,
+    "finished": false,
+    "rounds": [],
+    "points": {}
+}

@@ -20,5 +20,8 @@ class TournamentUpdateCmd:
         for key, value in self.updates.items():
             if hasattr(tournament, key):
                 setattr(tournament, key, value)
+
+        Tournament.save_tournaments()
+
         print(f"Tournament '{tournament.name}' updated successfully.")
         return tournament

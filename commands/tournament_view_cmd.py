@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 from models.tournament import Tournament
-
-
 @dataclass
 class TournamentViewCmd:
     """
