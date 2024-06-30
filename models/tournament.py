@@ -16,13 +16,15 @@ class PlayerDetails:
     email: str
     chess_id: str
     birthday: str
+    points: float = 0.0
 
-    def to_dict(self):
+    def make_dict(self):
         return {
             "name": self.name,
             "email": self.email,
             "chess_id": self.chess_id,
-            "birthday": self.birthday
+            "birthday": self.birthday,
+            "points": self.points
         }
 
 
@@ -35,11 +37,10 @@ class Tournament:
     end_date: str
     registered_players: List[PlayerDetails]
     num_rounds: int = MAX_ROUNDS
-    current_round: int = 0
+    current_round: int = 1
     completed: Optional[bool] = False
     finished: Optional[bool] = False
     rounds: Optional[List[List[dict]]] = None
-    points: Optional[Dict[str, int]] = None
     filepath: Optional[Path] = None
 
     tournaments: ClassVar[List['Tournament']] = []
@@ -98,12 +99,27 @@ class Tournament:
                 self.venue = data.get("venue", "")
                 self.start_date = data["dates"].get("from", "")
                 self.end_date = data["dates"].get("to", "")
-                self.registered_players = data.get("players", [])
                 self.num_rounds = data.get("number_of_rounds", 0)
                 self.current_round = data.get("current_round", 0)
                 self.completed = data.get("completed", False)
                 self.finished = data.get("finished", False)
                 self.rounds = data.get("rounds", [])
+
+                # Handle player information format
+                self.registered_players = []
+                for player in data.get("players", []):
+                    if isinstance(player, str):
+                        # Player is represented by chess_id only
+                        self.registered_players.append(PlayerDetails(name="", email="", chess_id=player, birthday=""))
+                    elif isinstance(player, dict):
+                        # Player has detailed information
+                        self.registered_players.append(PlayerDetails(
+                            name=player.get("name", ""),
+                            email=player.get("email", ""),
+                            chess_id=player.get("chess_id", ""),
+                            birthday=player.get("birthday", ""),
+                            points=player.get("points", 0)
+                        ))
         else:
             raise ValueError("Filepath is not provided")
 
@@ -112,14 +128,13 @@ class Tournament:
             "name": self.name,
             "venue": self.venue,
             "dates": {"from": self.start_date, "to": self.end_date},
-            "players": [player.to_dict() if isinstance(player, PlayerDetails) else player for player in
-                        self.registered_players],
+            "players": [player.make_dict() if isinstance(player, PlayerDetails) else player for player in self.registered_players],
             "number_of_rounds": self.num_rounds,
             "current_round": self.current_round,
             "completed": self.completed,
             "finished": self.finished,
             "rounds": self.rounds,
-            "points": self.points  # Include points attribute
+
         }
 
     @classmethod
@@ -281,7 +296,8 @@ class Tournament:
                     name=player_data.get("name", ""),
                     email=player_data.get("email", ""),
                     chess_id=player_data.get("chess_id", ""),
-                    birthday=player_data.get("birthday", "")
+                    birthday=player_data.get("birthday", ""),
+                    points=player_data.get("points", 0)
                 )
                 for player_data in players_data
             ]
@@ -293,8 +309,8 @@ class Tournament:
         finished = data.get("finished", False)
         rounds = data.get("rounds", [])
 
-        # Points handling
-        points = data.get("points", {})
+
+
 
         tournament = cls(
             name=data.get("name", ""),
@@ -307,7 +323,6 @@ class Tournament:
             completed=completed,
             finished=finished,
             rounds=rounds,
-            points=points,  # Include points attribute
             filepath=filepath
         )
 
@@ -338,8 +353,9 @@ class Tournament:
             email = input(f"Enter email for {player_name}: ")
             chess_id = input(f"Enter chess ID for {player_name}: ")
             birthday = input(f"Enter birthday for {player_name} (DD-MM-YYYY): ")
+            points = float(input(f"Enter points for {player_name}: "))
 
-            player = PlayerDetails(name=player_name, email=email, chess_id=chess_id, birthday=birthday)
+            player = PlayerDetails(name=player_name, email=email, chess_id=chess_id, birthday=birthday, points=points)
             registered_players.append(player)
 
         completed_input = input("Enter completed (True/False), or press enter to skip: ")
@@ -349,13 +365,6 @@ class Tournament:
         finished = bool(finished_input) if finished_input else False
 
         rounds = []
-
-        # Handling points input
-        points = {}
-        add_points = input("Would you like to add points for players? (yes/no): ").lower()
-        if add_points == "yes":
-            for player in registered_players:
-                points[player.name] = int(input(f"Enter points for {player.name}: "))
 
         instance = cls(
             name=name,
@@ -368,7 +377,6 @@ class Tournament:
             completed=completed,
             finished=finished,
             rounds=rounds,
-            points=points  # Include points attribute
         )
 
         # Assuming file paths and saving logic remain similar
