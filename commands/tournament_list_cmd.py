@@ -2,6 +2,7 @@ from commands.base import BaseCommand
 from commands.context import Context
 from models import Tournament
 
+
 class TournamentListCmd(BaseCommand):
     """
     Command to list all tournaments.

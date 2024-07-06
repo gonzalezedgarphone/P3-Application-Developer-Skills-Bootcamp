@@ -1,14 +1,13 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 import os
 from datetime import datetime
-from typing import List, Dict, Optional, ClassVar
+from typing import List, Optional, ClassVar
 import json
 from pathlib import Path
-from models.player import Player
-
 
 
 MAX_ROUNDS = 4
+
 
 @dataclass
 class PlayerDetails:
@@ -24,11 +23,13 @@ class PlayerDetails:
             "email": self.email,
             "chess_id": self.chess_id,
             "birthday": self.birthday,
-            "points": self.points
+            "points": self.points,
         }
 
 
 DATE_FORMAT = "%d-%m-%Y"
+
+
 @dataclass
 class Tournament:
     name: str
@@ -43,7 +44,7 @@ class Tournament:
     rounds: Optional[List[List[dict]]] = None
     filepath: Optional[Path] = None
 
-    tournaments: ClassVar[List['Tournament']] = []
+    tournaments: ClassVar[List["Tournament"]] = []
 
     def __post_init__(self):
         if self.filepath:
@@ -52,45 +53,24 @@ class Tournament:
             else:
                 self.load_from_json()
         else:
-            '''required_fields = [self.name, self.venue, self.start_date, self.end_date, self.num_rounds, self.current_round]
+            """required_fields = [self.name, self.venue, self.start_date, self.end_date, self.num_rounds,
+             self.current_round]
             if not all(required_fields):
-                raise ValueError("Required attributes are missing")'''
+                raise ValueError("Required attributes are missing")"""
             if self.num_rounds > MAX_ROUNDS:
                 raise ValueError(f"Number of rounds cannot exceed {MAX_ROUNDS}")
-
 
     @classmethod
     def load_from_folder(cls):
         base_dir = Path(__file__).resolve().parent.parent
         folder_path = base_dir / "data" / "tournaments"
         for file_name in os.listdir(folder_path):
-            if file_name.endswith('.json'):
+            if file_name.endswith(".json"):
                 file_path = folder_path / file_name
                 tournament = cls.from_json(file_path)
                 cls.tournaments.append(tournament)
 
-    @classmethod
-    def create_tournament(cls, name: str, dates: Dict[str, str], venue: str, number_of_rounds: int, current_round: int,
-                          players: List[str] = None, rounds: List[List[Dict[str, str]]] = None,
-                          finished: bool = False):
-
-        tournament = cls(
-            name=name,
-            venue=venue,
-            start_date=dates["from"],
-            end_date=dates["to"],
-            registered_players=players or [],
-            num_rounds=number_of_rounds,
-            current_round=current_round,
-            completed=not bool(rounds),  # Assume completed if rounds are provided
-            finished=finished,
-            rounds=rounds or []
-        )
-        # Create an instance of the Tournament class and append the new tournament
-        instance = cls()
-        instance.tournaments.append(tournament)
-        return tournament  # Return the created tournament object
-    #ABLE TO UPDATE AND LOAD FROM JSON FILE
+    # ABLE TO UPDATE AND LOAD FROM JSON FILE
     def load_from_json(self):
         if self.filepath:
             with open(self.filepath) as fp:
@@ -110,16 +90,22 @@ class Tournament:
                 for player in data.get("players", []):
                     if isinstance(player, str):
                         # Player is represented by chess_id only
-                        self.registered_players.append(PlayerDetails(name="", email="", chess_id=player, birthday=""))
+                        self.registered_players.append(
+                            PlayerDetails(
+                                name="", email="", chess_id=player, birthday=""
+                            )
+                        )
                     elif isinstance(player, dict):
                         # Player has detailed information
-                        self.registered_players.append(PlayerDetails(
-                            name=player.get("name", ""),
-                            email=player.get("email", ""),
-                            chess_id=player.get("chess_id", ""),
-                            birthday=player.get("birthday", ""),
-                            points=player.get("points", 0)
-                        ))
+                        self.registered_players.append(
+                            PlayerDetails(
+                                name=player.get("name", ""),
+                                email=player.get("email", ""),
+                                chess_id=player.get("chess_id", ""),
+                                birthday=player.get("birthday", ""),
+                                points=player.get("points", 0),
+                            )
+                        )
         else:
             raise ValueError("Filepath is not provided")
 
@@ -128,13 +114,15 @@ class Tournament:
             "name": self.name,
             "venue": self.venue,
             "dates": {"from": self.start_date, "to": self.end_date},
-            "players": [player.make_dict() if isinstance(player, PlayerDetails) else player for player in self.registered_players],
+            "players": [
+                player.make_dict() if isinstance(player, PlayerDetails) else player
+                for player in self.registered_players
+            ],
             "number_of_rounds": self.num_rounds,
             "current_round": self.current_round,
             "completed": self.completed,
             "finished": self.finished,
             "rounds": self.rounds,
-
         }
 
     @classmethod
@@ -143,19 +131,18 @@ class Tournament:
         loaded_tournament_names = set()  # Track loaded tournament names
 
         for file_name in os.listdir(folder_path):
-            if file_name.endswith('.json'):
+            if file_name.endswith(".json"):
                 file_path = folder_path / file_name
                 try:
-                    with open(file_path) as fp:
-                        tournament_data = json.load(fp)
-                        tournament = cls.from_json(file_path)
 
-                        # Check if tournament name already exists
-                        if tournament.name in loaded_tournament_names:
-                            continue
+                    tournament = cls.from_json(file_path)
 
-                        tournaments.append(tournament)
-                        loaded_tournament_names.add(tournament.name)
+                    # Check if tournament name already exists
+                    if tournament.name in loaded_tournament_names:
+                        continue
+
+                    tournaments.append(tournament)
+                    loaded_tournament_names.add(tournament.name)
 
                 except json.JSONDecodeError as e:
                     print(f"Error loading JSON file {file_name}: {e}")
@@ -165,6 +152,7 @@ class Tournament:
                     print(f"An error occurred while processing {file_name}: {e}")
 
         return tournaments
+
     @classmethod
     def save_tournaments(cls):
         base_dir = Path(__file__).resolve().parent.parent
@@ -178,14 +166,21 @@ class Tournament:
         if self.filepath:
             tournament_data = self.to_dict()
             tournament_data["filepath"] = str(self.filepath)
-            with open(self.filepath, 'w') as f:
+            with open(self.filepath, "w") as f:
                 json.dump(tournament_data, f, indent=4)
         else:
             print("Filepath not set. Cannot save tournament.")
+
     def display_all_tournaments(self):
-        sorted_tournaments = sorted(self.tournaments, key=lambda t: datetime.strptime(t.start_date,
-                                                                                      "%d-%m-%Y") if t.start_date else datetime.min,
-                                    reverse=True)
+        sorted_tournaments = sorted(
+            self.tournaments,
+            key=lambda t: (
+                datetime.strptime(t.start_date, "%d-%m-%Y")
+                if t.start_date
+                else datetime.min
+            ),
+            reverse=True,
+        )
 
         for i, tournament in enumerate(sorted_tournaments, start=1):
             print(f"Tournament {i}: {tournament.name}")
@@ -198,10 +193,6 @@ class Tournament:
             return cls.tournaments[index]
         else:
             return None
-
-    def register_player(self, player_name: str):
-        if player_name not in self.registered_players:
-            self.registered_players.append(player_name)
 
     def display_info(self):
         print("Tournament Information:")
@@ -219,11 +210,11 @@ class Tournament:
         print("")
         print("Rounds:")
         for i, round_info in enumerate(self.rounds, start=1):
-            print(f"Round {i}:")
+            print(f"Round {i}: ")
             for match in round_info:
-                players = match['players']
-                completed = match['completed']
-                winner = match.get('winner')
+                players = match["players"]
+                completed = match["completed"]
+                winner = match.get("winner")
                 if winner is None:
                     winner_message = "Draw" if completed else "Not Yet Completed"
                 else:
@@ -232,25 +223,6 @@ class Tournament:
                 print(f"  Completed: {completed}")
                 print(f"  Winner: {winner_message}")
                 print()
-
-    def questions(self):
-        self.name = input("Enter tournament name: ")
-        self.venue = input("Enter tournament venue: ")
-        self.start_date = input("Enter tournament start date (DD-MM-YYYY): ")
-        self.end_date = input("Enter tournament end date (DD-MM-YYYY): ")
-        self.num_rounds = int(input("Enter number of rounds: "))
-        self.current_round = int(input("Enter current round: "))
-
-        while True:
-            player_name = input("Enter player name: ")
-            self.registered_players.append(player_name)
-
-            add_another = input("Add another player? (yes/no): ")
-            if add_another.lower() != "yes":
-                break
-
-        print(f"Tournament '{self.name}' created successfully.")
-        self.save_tournaments()
 
     @classmethod
     def from_json(cls, filepath: Path):
@@ -268,14 +240,20 @@ class Tournament:
 
         try:
             # Attempt to parse dates with format %d-%m-%Y
-            start_date = datetime.strptime(start_date_str, "%d-%m-%Y").strftime("%d-%m-%y")
+            start_date = datetime.strptime(start_date_str, "%d-%m-%Y").strftime(
+                "%d-%m-%y"
+            )
             end_date = datetime.strptime(end_date_str, "%d-%m-%Y").strftime("%d-%m-%y")
         except ValueError as e1:
             print(f"Error parsing dates with format %d-%m-%Y: {e1}")
             try:
                 # Attempt to parse dates with format %m-%d-%Y
-                start_date = datetime.strptime(start_date_str, "%m-%d-%Y").strftime("%d-%m-%y")
-                end_date = datetime.strptime(end_date_str, "%m-%d-%Y").strftime("%d-%m-%y")
+                start_date = datetime.strptime(start_date_str, "%m-%d-%Y").strftime(
+                    "%d-%m-%y"
+                )
+                end_date = datetime.strptime(end_date_str, "%m-%d-%Y").strftime(
+                    "%d-%m-%y"
+                )
             except ValueError as e2:
                 print(f"Error parsing dates with format %d-%m-%Y: {e2}")
                 start_date = end_date = ""  # Handle error case gracefully
@@ -297,7 +275,7 @@ class Tournament:
                     email=player_data.get("email", ""),
                     chess_id=player_data.get("chess_id", ""),
                     birthday=player_data.get("birthday", ""),
-                    points=player_data.get("points", 0)
+                    points=player_data.get("points", 0),
                 )
                 for player_data in players_data
             ]
@@ -308,9 +286,6 @@ class Tournament:
         completed = data.get("completed", False)
         finished = data.get("finished", False)
         rounds = data.get("rounds", [])
-
-
-
 
         tournament = cls(
             name=data.get("name", ""),
@@ -323,7 +298,7 @@ class Tournament:
             completed=completed,
             finished=finished,
             rounds=rounds,
-            filepath=filepath
+            filepath=filepath,
         )
 
         cls.tournaments.append(tournament)
@@ -337,7 +312,9 @@ class Tournament:
         end_date_str = input("Enter tournament end date (DD-MM-YYYY): ")
 
         # Parse dates using the specified format
-        start_date = datetime.strptime(start_date_str, DATE_FORMAT).strftime(DATE_FORMAT)
+        start_date = datetime.strptime(start_date_str, DATE_FORMAT).strftime(
+            DATE_FORMAT
+        )
         end_date = datetime.strptime(end_date_str, DATE_FORMAT).strftime(DATE_FORMAT)
 
         num_rounds = int(input("Enter number of rounds: "))
@@ -345,7 +322,10 @@ class Tournament:
 
         registered_players = []
 
-        while len(registered_players) < 2 or input("Add another player? (yes/no): ").lower() == "yes":
+        while (
+            len(registered_players) < 2
+            or input("Add another player? (yes/no): ").lower() == "yes"
+        ):
             if len(registered_players) < 2:
                 print("A tournament must have at least two registered players.")
 
@@ -355,10 +335,18 @@ class Tournament:
             birthday = input(f"Enter birthday for {player_name} (DD-MM-YYYY): ")
             points = float(input(f"Enter points for {player_name}: "))
 
-            player = PlayerDetails(name=player_name, email=email, chess_id=chess_id, birthday=birthday, points=points)
+            player = PlayerDetails(
+                name=player_name,
+                email=email,
+                chess_id=chess_id,
+                birthday=birthday,
+                points=points,
+            )
             registered_players.append(player)
 
-        completed_input = input("Enter completed (True/False), or press enter to skip: ")
+        completed_input = input(
+            "Enter completed (True/False), or press enter to skip: "
+        )
         completed = bool(completed_input) if completed_input else False
 
         finished_input = input("Enter finished (True/False), or press enter to skip: ")
@@ -407,11 +395,12 @@ def main():
 
     # Display information about loaded tournaments
     for i, tournament in enumerate(tournaments, start=1):
-        print(f"Tournament {i}:")
+        print(f"Tournament {i}: ")
         tournament.display_info()
 
     for names in tournaments:
         print(names)
+
 
 if __name__ == "__main__":
     main()

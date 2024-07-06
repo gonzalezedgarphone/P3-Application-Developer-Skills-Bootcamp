@@ -1,10 +1,13 @@
 from dataclasses import dataclass
 from models.tournament import Tournament
+
+
 @dataclass
 class TournamentViewCmd:
     """
     Command to view a specific tournament's details.
     """
+
     index: int
 
     def execute(self):

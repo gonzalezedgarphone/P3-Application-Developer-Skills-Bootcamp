@@ -1,5 +1,4 @@
 from commands import PlayerUpdateCmd
-
 from ..base_screen import BaseScreen
 
 

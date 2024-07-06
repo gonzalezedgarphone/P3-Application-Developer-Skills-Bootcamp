@@ -1,8 +1,16 @@
-from commands import TournamentListCmd, TournamentCreateCmd
+from commands import TournamentListCmd
 from commands import ClubListCmd
-from commands.context import Context
-from screens import ClubCreate, ClubView, MainMenu, PlayerEdit, PlayerView, TournamentView, TournamentMenu
+from screens.players import PlayerEdit, PlayerView
+from screens import (
+    ClubCreate,
+    ClubView,
+    MainMenu,
+    TournamentView,
+    TournamentMenu,
+)
 from pathlib import Path
+
+
 class App:
     """The main controller for the club management program"""
 
@@ -14,7 +22,6 @@ class App:
         "player-edit": PlayerEdit,
         "player-create": PlayerEdit,
         "tournament-menu": TournamentMenu,
-        "tournament-create": TournamentCreateCmd,
         "tournament-view": TournamentView,
         "exit": False,
     }
@@ -35,8 +42,12 @@ class App:
                 self.context = command()
                 break
             elif choice == "2":
-                tournaments_folder = Path(
-                    __file__).resolve().parent.parent / "P3-Application-Developer-Skills-Bootcamp" / "data" / "tournaments"
+                tournaments_folder = (
+                    Path(__file__).resolve().parent.parent
+                    / "P3-Application-Developer-Skills-Bootcamp"
+                    / "data"
+                    / "tournaments"
+                )
 
                 command = TournamentListCmd(tournaments_folder)
                 self.context = command()

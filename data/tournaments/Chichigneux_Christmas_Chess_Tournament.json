@@ -6,14 +6,62 @@
         "to": "23-12-2022"
     },
     "players": [
-        "RY03677",
-        "DP10300",
-        "PB43166",
-        "YQ88272",
-        "RI14529",
-        "AV07547",
-        "OU52460",
-        "CF24301"
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "RY03677",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "DP10300",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "PB43166",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "YQ88272",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "RI14529",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "AV07547",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "OU52460",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "CF24301",
+            "birthday": "",
+            "points": 0.0
+        }
     ],
     "number_of_rounds": 4,
     "current_round": null,
@@ -156,6 +204,5 @@
                 "winner": null
             }
         ]
-    ],
-    "points": {}
+    ]
 }

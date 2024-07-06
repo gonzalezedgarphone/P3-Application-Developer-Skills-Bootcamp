@@ -1,0 +1,69 @@
+{
+    "name": "January Tournament",
+    "venue": "Janary Hall East",
+    "dates": {
+        "from": "05-10-2024",
+        "to": "18-10-2024"
+    },
+    "players": [
+        {
+            "name": "Patric Sofa",
+            "email": "sofa@gmail.com",
+            "chess_id": "JE33355",
+            "birthday": "11-10-1990",
+            "points": 2.5
+        },
+        {
+            "name": "Paul France",
+            "email": "france@gmail.com",
+            "chess_id": "JP9345",
+            "birthday": "11-08-1980",
+            "points": 2.5
+        }
+    ],
+    "number_of_rounds": 4,
+    "current_round": 4,
+    "completed": false,
+    "finished": true,
+    "rounds": [
+        [
+            {
+                "players": [
+                    "JE33355",
+                    "JP9345"
+                ],
+                "completed": false
+            }
+        ],
+        [
+            {
+                "players": [
+                    "JE33355",
+                    "JP9345"
+                ],
+                "completed": true,
+                "winner": "JE33355"
+            }
+        ],
+        [
+            {
+                "players": [
+                    "JE33355",
+                    "JP9345"
+                ],
+                "completed": true,
+                "winner": "JP9345"
+            }
+        ],
+        [
+            {
+                "players": [
+                    "JE33355",
+                    "JP9345"
+                ],
+                "completed": true,
+                "winner": null
+            }
+        ]
+    ]
+}

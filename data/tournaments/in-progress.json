@@ -1,23 +1,72 @@
 {
     "name": "Cornville Summer Chess",
+    "venue": "Cornville Town Hall",
     "dates": {
         "from": "21-06-2022",
         "to": "21-07-2022"
     },
-    "venue": "Cornville Town Hall",
-    "number_of_rounds": 4,
-    "current_round": 2,
-    "completed": false,
     "players": [
-        "LU33889",
-        "YJ29085",
-        "PB43166",
-        "XW31336",
-        "OS93227",
-        "OU52460",
-        "AV07547",
-        "OH36083"
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "LU33889",
+            "birthday": "",
+            "points": 1.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "YJ29085",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "PB43166",
+            "birthday": "",
+            "points": 0.5
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "XW31336",
+            "birthday": "",
+            "points": 0.5
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "OS93227",
+            "birthday": "",
+            "points": 0.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "OU52460",
+            "birthday": "",
+            "points": 1.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "AV07547",
+            "birthday": "",
+            "points": 1.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "OH36083",
+            "birthday": "",
+            "points": 0.0
+        }
     ],
+    "number_of_rounds": 4,
+    "current_round": 3,
+    "completed": false,
+    "finished": false,
     "rounds": [
         [
             {
@@ -25,8 +74,38 @@
                     "LU33889",
                     "YJ29085"
                 ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "PB43166",
+                    "XW31336"
+                ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "OS93227",
+                    "OU52460"
+                ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "AV07547",
+                    "OH36083"
+                ],
+                "completed": false
+            }
+        ],
+        [
+            {
+                "players": [
+                    "LU33889",
+                    "YJ29085"
+                ],
                 "completed": true,
-                "winner": "YJ29085"
+                "winner": "LU33889"
             },
             {
                 "players": [
@@ -34,7 +113,7 @@
                     "XW31336"
                 ],
                 "completed": true,
-                "winner": "PB43166"
+                "winner": null
             },
             {
                 "players": [
@@ -50,41 +129,11 @@
                     "OH36083"
                 ],
                 "completed": true,
-                "winner": null
+                "winner": "AV07547"
             }
         ],
-        [
-            {
-                "players": [
-                    "YJ29085",
-                    "OU52460"
-                ],
-                "completed": false,
-                "winner": "OU52460"
-            },
-            {
-                "players": [
-                    "PB43166",
-                    "AV07547"
-                ],
-                "completed": true,
-                "winner": null
-            },
-            {
-                "players": [
-                    "OH36083",
-                    "XW31336"
-                ],
-                "completed": false
-            },
-            {
-                "players": [
-                    "LU33889",
-                    "OS93227"
-                ],
-                "completed": false,
-                "winner": null
-            }
-        ]
-    ]
+        [],
+        []
+    ],
+    "filepath": "E:\\GitProjects\\P3-Application-Developer-Skills-Bootcamp\\data\\tournaments\\in-progress.json"
 }

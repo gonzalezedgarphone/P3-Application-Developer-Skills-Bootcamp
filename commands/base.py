@@ -1,7 +1,5 @@
 from abc import ABCMeta, abstractmethod
 
-from commands.context import Context
-
 
 class BaseCommand(metaclass=ABCMeta):
     """This is the base class for a command"""
@@ -14,4 +12,3 @@ class BaseCommand(metaclass=ABCMeta):
     def __call__(self):
         """Syntactic sugar: calling the instance calls its execute() method"""
         return self.execute()
-

@@ -1,4 +1,4 @@
-from commands import ExitCmd, NoopCmd
+from commands import NoopCmd
 from commands.context import Context
 from .base_screen import BaseScreen
 
