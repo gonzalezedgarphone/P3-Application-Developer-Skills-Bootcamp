@@ -31,7 +31,8 @@ class TournamentMenu(BaseScreen):
     def get_command(self):
         while True:
             print(
-                "Type the number of a tournament to view/manage it, 'E' to edit, or 'C' to create a new tournament."
+                "Type the number of a tournament to view/manage it, 'E' to edit, 'C' to create a new tournament,"
+                " 'L' to see a list of registered players, or 'S' to search for a player."
             )
             print("Type 'X' to exit.")
             value = self.input_string()
@@ -45,8 +46,10 @@ class TournamentMenu(BaseScreen):
                     print("Invalid tournament number.")
             elif value.upper() == "C":
                 new_tournament = Tournament.prompt_questions()
-                self.register_players_for_tournament(new_tournament)
-                return Context("tournament-create", tournament=new_tournament)
+                if len(new_tournament.registered_players) < 2:
+                    print("A tournament must have at least two players.")
+                else:
+                    return Context("tournament-create", tournament=new_tournament)
             elif value.upper() == "E":
                 tournament_idx = input("Enter the number of the tournament to edit: ")
                 if tournament_idx.isdigit():
@@ -84,6 +87,27 @@ class TournamentMenu(BaseScreen):
                                 reverse=True,
                             )
                             self.display()
+                    else:
+                        print("Invalid tournament number.")
+                else:
+                    print("Invalid tournament number.")
+            elif value.upper() == "L":
+                self.extract_players()
+                self.sorted_tournaments = sorted(
+                    self.tournaments,
+                    key=lambda t: datetime.strptime(t.start_date, "%d-%m-%Y"),
+                    reverse=True,
+                )
+                self.display()
+            elif value.upper() == "S":
+                tournament_idx = input(
+                    "Enter the number of the tournament to search players in: "
+                )
+                if tournament_idx.isdigit():
+                    index = int(tournament_idx) - 1
+                    if 0 <= index < len(self.sorted_tournaments):
+                        tournament = self.sorted_tournaments[index]
+                        self.search_player(tournament)
                     else:
                         print("Invalid tournament number.")
                 else:
@@ -128,7 +152,7 @@ class TournamentMenu(BaseScreen):
                 updates[key] = updated_players
             elif key == "rounds":
                 # Display current rounds information
-                print(f"Current rounds: ")
+                print("Current rounds: ")
                 for i, round_info in enumerate(value, start=1):
                     print(f"Round {i}: ")
                     for match in round_info:
@@ -218,59 +242,18 @@ class TournamentMenu(BaseScreen):
         """Save all tournaments to their respective JSON files"""
         Tournament.save_tournaments()
 
-    def register_players_for_tournament(self, tournament):
-        print("You need to register at least two players for the new tournament.")
-        while len(tournament.registered_players) < 2:
-            self.register_player(tournament)
-
-    def register_player(self, tournament):
-        while True:
-            print(
-                "\nType 'A' to view all players, 'S' to search for a player, or 'B' to go back."
-            )
-            action = input("Enter your action: ").strip().upper()
-
-            if action == "A":
-                self.view_all_players(tournament)
-            elif action == "S":
-                self.search_player(tournament)
-            elif action == "B":
-                break
-            else:
-                print("Invalid action. Please try again.")
-
-    def view_all_players(self, tournament):
-        print("\nList of all available players:")
-        # Assuming `self.all_players` contains the list of all players
-        for idx, player in enumerate(self.all_players, 1):
-            print(f"{idx}. {player.name} (Chess ID: {player.chess_id})")
-
-        player_number = (
-            input("Enter the number of the player to register or 'B' to go back: ")
-            .strip()
-            .upper()
-        )
-        if player_number.isdigit():
-            player_number = int(player_number)
-            if 1 <= player_number <= len(self.all_players):
-                selected_player = self.all_players[player_number - 1]
-                self.register_selected_player(tournament, selected_player)
-            else:
-                print("Invalid player number.")
-        elif player_number == "B":
-            return
-        else:
-            print("Invalid input. Please try again.")
-
-    def search_player(self, tournament):
+    @staticmethod
+    def search_player(tournament):
+        """Search for a player within a specific tournament."""
         search_term = (
             input("Enter the Chess ID or part of the player's name to search: ")
             .strip()
             .lower()
         )
+
         found_players = [
             player
-            for player in self.all_players
+            for player in tournament.registered_players
             if search_term in player.chess_id.lower()
             or search_term in player.name.lower()
         ]
@@ -279,28 +262,31 @@ class TournamentMenu(BaseScreen):
             print("\nSearch results:")
             for idx, player in enumerate(found_players, 1):
                 print(f"{idx}. {player.name} (Chess ID: {player.chess_id})")
-
-            player_number = (
-                input("Enter the number of the player to register or 'B' to go back: ")
-                .strip()
-                .upper()
-            )
-            if player_number.isdigit():
-                player_number = int(player_number)
-                if 1 <= player_number <= len(found_players):
-                    selected_player = found_players[player_number - 1]
-                    self.register_selected_player(tournament, selected_player)
-                else:
-                    print("Invalid player number.")
-            elif player_number == "B":
-                return
-            else:
-                print("Invalid input. Please try again.")
         else:
-            print("No players found with the given search term.")
+            print("No players found matching the search criteria.")
 
-    def register_selected_player(self, tournament, player):
-        tournament.registered_players.append(player)
-        print(
-            f"Player {player.name} (Chess ID: {player.chess_id}) registered successfully."
-        )
+    @staticmethod
+    def load_tournament_data():
+        """Load tournament data from JSON files."""
+        base_dir = Path(__file__).resolve().parent.parent.parent
+        data_folder = base_dir / "data" / "tournaments"
+        tournament_files = data_folder.glob("*.json")
+
+        tournaments = []
+        for file_path in tournament_files:
+            tournament = Tournament.from_json(file_path)
+            if tournament:
+                tournaments.append(tournament)
+
+        return tournaments
+
+    def extract_players(self):
+        tournaments = self.load_tournament_data()
+        for tournament in tournaments:
+            print(f"\nTournament: {tournament.name}")
+            if tournament.registered_players:
+                print("Registered Players:")
+                for player in tournament.registered_players:
+                    print(f"Name: {player.name}, Chess ID: {player.chess_id}")
+            else:
+                print("No registered players in this tournament.")

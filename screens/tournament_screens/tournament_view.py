@@ -33,27 +33,33 @@ class TournamentView(BaseScreen):
         # Print pairings for verification only if the current round is 1
         if self.tournament.current_round == 1:
             print("First Round Pairings:")
+            print("=====================")
             for player1, player2 in self.first_round_pairings:
                 if player2:
                     print(f"{player1.name} vs {player2.name}")
                 else:
                     print(f"{player1.name} (Bye)")
+            print("=====================")
 
     def run(self):
         while True:
-            self.display_tournament_info()
+            self.display_tournament_info_without_players()
             command = self.get_command()
             if command:
                 return command
 
     def display_tournament_info(self):
+        print("--------------------")
         print("Tournament Information:")
         print(f"Name: {self.tournament.name}")
         print(f"Venue: {self.tournament.venue}")
         print(f"Dates: {self.tournament.start_date} to {self.tournament.end_date}")
         print(f"Number of Rounds: {self.tournament.num_rounds}")
         print(f"Current Round: {self.tournament.current_round}")
-        print("List of Players:")
+        print()
+        print("The List of Current Players in Tournament")
+        print("Players Information:")
+        print("--------------------")
 
         for player_info in self.tournament.registered_players:
             details = []
@@ -83,6 +89,7 @@ class TournamentView(BaseScreen):
 
             if details:
                 print(": ".join(details))
+        print("********************")
 
     def get_command(self):
         print(
@@ -199,19 +206,30 @@ class TournamentView(BaseScreen):
                 "Tournament has reached the maximum number of rounds and is now finished."
             )
         else:
-            self.tournament.current_round += 1
-            print(f"Advancing to Round {self.tournament.current_round}")
-
-        self.tournament.save()
+            confirmation = (
+                input("Are you sure you want to advance to the next round? (yes/no): ")
+                .strip()
+                .lower()
+            )
+            if confirmation == "yes":
+                self.tournament.current_round += 1
+                print(f"Advancing to Round {self.tournament.current_round}")
+                self.tournament.save()
+            elif confirmation == "no":
+                print("Operation cancelled.")
+            else:
+                print("Invalid input. Operation cancelled.")
 
     def generate_tournament_report(self):
         print(f"Tournament Report for {self.tournament.name}")
+        self.display_tournament_info()
         players = self.tournament.registered_players
         sorted_players = TournamentOperations.sort_players(players)
         TournamentOperations.print_rankings(sorted_players)
 
         for i, round_results in enumerate(self.tournament.rounds, start=1):
-            print(f"\nRound {i} Results:")
+            print("--------------------")
+            print(f"\nRound {i} Results: ")
             for match in round_results:
                 player1_id, player2_id = match["players"]
                 result = match.get("winner")
@@ -232,7 +250,8 @@ class TournamentView(BaseScreen):
                     print(f"{player1.name} (Bye)")
                 else:
                     print("Invalid match data. Could not find players.")
-        self.display_tournament_info_without_players()
+        # self.display_tournament_info()
+        print("--------------------")
 
     def display_tournament_info_without_players(self):
         print("Tournament Information:")

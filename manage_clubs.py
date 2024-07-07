@@ -60,7 +60,7 @@ class App:
                 print("Invalid choice. Please try again.")
 
     def run(self):
-        while self.context != False:
+        while self.context is not False:
             # Get the screen class from the mapping
             screen = self.SCREENS[self.context.screen]
             try:

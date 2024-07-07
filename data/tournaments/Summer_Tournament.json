@@ -25,6 +25,5 @@
     "current_round": 1,
     "completed": false,
     "finished": false,
-    "rounds": [],
-    "filepath": "E:\\GitProjects\\P3-Application-Developer-Skills-Bootcamp\\data\\tournaments\\Summer_Tournament.json"
+    "rounds": []
 }

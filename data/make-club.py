@@ -2,6 +2,7 @@
 This script allows anyone to create a JSON file for a chess club.
 It will be filled with random members.
 """
+
 import argparse
 import json
 import random
@@ -14,7 +15,8 @@ from faker.providers import BaseProvider
 class ChessID(BaseProvider):
     """Custom provider class to generate a 'Chess ID'"""
 
-    def chess_id(self):
+    @staticmethod
+    def chess_id():
         """Chess ID = two letters + 5 numbers"""
         # Letters
         elements = [chr(random.randint(65, 90)) for _ in range(2)]

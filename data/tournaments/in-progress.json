@@ -11,35 +11,7 @@
             "email": "",
             "chess_id": "LU33889",
             "birthday": "",
-            "points": 1.0
-        },
-        {
-            "name": "",
-            "email": "",
-            "chess_id": "YJ29085",
-            "birthday": "",
-            "points": 0.0
-        },
-        {
-            "name": "",
-            "email": "",
-            "chess_id": "PB43166",
-            "birthday": "",
-            "points": 0.5
-        },
-        {
-            "name": "",
-            "email": "",
-            "chess_id": "XW31336",
-            "birthday": "",
-            "points": 0.5
-        },
-        {
-            "name": "",
-            "email": "",
-            "chess_id": "OS93227",
-            "birthday": "",
-            "points": 0.0
+            "points": 2.0
         },
         {
             "name": "",
@@ -58,13 +30,41 @@
         {
             "name": "",
             "email": "",
+            "chess_id": "PB43166",
+            "birthday": "",
+            "points": 1.5
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "XW31336",
+            "birthday": "",
+            "points": 1.0
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "YJ29085",
+            "birthday": "",
+            "points": 0.5
+        },
+        {
+            "name": "",
+            "email": "",
+            "chess_id": "OS93227",
+            "birthday": "",
+            "points": 1.0
+        },
+        {
+            "name": "",
+            "email": "",
             "chess_id": "OH36083",
             "birthday": "",
             "points": 0.0
         }
     ],
     "number_of_rounds": 4,
-    "current_round": 3,
+    "current_round": 4,
     "completed": false,
     "finished": false,
     "rounds": [
@@ -72,20 +72,6 @@
             {
                 "players": [
                     "LU33889",
-                    "YJ29085"
-                ],
-                "completed": false
-            },
-            {
-                "players": [
-                    "PB43166",
-                    "XW31336"
-                ],
-                "completed": false
-            },
-            {
-                "players": [
-                    "OS93227",
                     "OU52460"
                 ],
                 "completed": false
@@ -93,24 +79,47 @@
             {
                 "players": [
                     "AV07547",
+                    "PB43166"
+                ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "XW31336",
+                    "YJ29085"
+                ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "OS93227",
                     "OH36083"
                 ],
                 "completed": false
             }
         ],
+        [],
         [
             {
                 "players": [
                     "LU33889",
-                    "YJ29085"
+                    "OU52460"
                 ],
                 "completed": true,
                 "winner": "LU33889"
             },
             {
                 "players": [
-                    "PB43166",
-                    "XW31336"
+                    "AV07547",
+                    "PB43166"
+                ],
+                "completed": true,
+                "winner": "PB43166"
+            },
+            {
+                "players": [
+                    "XW31336",
+                    "YJ29085"
                 ],
                 "completed": true,
                 "winner": null
@@ -118,21 +127,12 @@
             {
                 "players": [
                     "OS93227",
-                    "OU52460"
-                ],
-                "completed": true,
-                "winner": "OU52460"
-            },
-            {
-                "players": [
-                    "AV07547",
                     "OH36083"
                 ],
                 "completed": true,
-                "winner": "AV07547"
+                "winner": "OS93227"
             }
         ],
-        [],
         []
     ],
     "filepath": "E:\\GitProjects\\P3-Application-Developer-Skills-Bootcamp\\data\\tournaments\\in-progress.json"

@@ -1,0 +1,71 @@
+{
+    "name": "North Hills Tournament",
+    "venue": "North Hall",
+    "dates": {
+        "from": "08-10-2024",
+        "to": "10-10-2024"
+    },
+    "players": [
+        {
+            "name": "Johnny Wood",
+            "email": "jonhn@gmail.com",
+            "chess_id": "HU7766",
+            "birthday": "11-10-1990",
+            "points": 4.0
+        },
+        {
+            "name": "David Lee",
+            "email": "dave@gmail.com",
+            "chess_id": "JU3222",
+            "birthday": "08-10-1985",
+            "points": 2.0
+        },
+        {
+            "name": "Brian Nure",
+            "email": "bran@gmail.com",
+            "chess_id": "LO3454",
+            "birthday": "11-10-1990",
+            "points": 2.0
+        },
+        {
+            "name": "Laura Pat",
+            "email": "lar@gmail.com",
+            "chess_id": "JU7899",
+            "birthday": "04-22-1990",
+            "points": 2.0
+        },
+        {
+            "name": "Ken PO",
+            "email": "ken@gmail.com",
+            "chess_id": "JU4662",
+            "birthday": "08-11-1980",
+            "points": 1.5
+        },
+        {
+            "name": "Lucia Mendez",
+            "email": "lucy@gmail.com",
+            "chess_id": "JU7877",
+            "birthday": "05-10-2000",
+            "points": 2.5
+        },
+        {
+            "name": "Keane Lopex",
+            "email": "kean@gmail.com",
+            "chess_id": "JU5665",
+            "birthday": "05-11-1975",
+            "points": 2.0
+        },
+        {
+            "name": "Oliver Mart",
+            "email": "olive@gmail.com",
+            "chess_id": "PL4333",
+            "birthday": "10-08-1995",
+            "points": 0.0
+        }
+    ],
+    "number_of_rounds": 4,
+    "current_round": 4,
+    "completed": false,
+    "finished": true,
+    "rounds": []
+}

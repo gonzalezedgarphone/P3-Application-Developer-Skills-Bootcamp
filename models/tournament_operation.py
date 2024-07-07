@@ -124,3 +124,5 @@ class TournamentOperations:
             print(
                 f"{i}. {player.name if isinstance(player, PlayerDetails) else player['name']}: {points} points"
             )
+        print("********************")
+        print()

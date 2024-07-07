@@ -1,0 +1,43 @@
+{
+    "name": "Mountain High Tournament",
+    "venue": "Mountain Hall",
+    "dates": {
+        "from": "11-11-2024",
+        "to": "12-11-2024"
+    },
+    "players": [
+        {
+            "name": "Player One",
+            "email": "playone@gmail.com",
+            "chess_id": "PL43355",
+            "birthday": "11-11-1990",
+            "points": 3.0
+        },
+        {
+            "name": "player four",
+            "email": "four@gmail.com",
+            "chess_id": "FR35334",
+            "birthday": "11-11-1975",
+            "points": 1.0
+        },
+        {
+            "name": "Player Two",
+            "email": "two@gmail.com",
+            "chess_id": "TW94944",
+            "birthday": "11-11-1980",
+            "points": 1.0
+        },
+        {
+            "name": "player three",
+            "email": "three@gmail.com",
+            "chess_id": "JU4453",
+            "birthday": "10-10-1980",
+            "points": 1.0
+        }
+    ],
+    "number_of_rounds": 4,
+    "current_round": 3,
+    "completed": false,
+    "finished": false,
+    "rounds": []
+}

@@ -11,35 +11,7 @@
             "email": "pat@gmail.com",
             "chess_id": "NH9998",
             "birthday": "11-10-1990",
-            "points": 1.0
-        },
-        {
-            "name": "Luis Torres",
-            "email": "Luis@gmail.com",
-            "chess_id": "FR3222",
-            "birthday": "11-11-1980",
-            "points": 0.0
-        },
-        {
-            "name": "Third Player",
-            "email": "third@gmail.com",
-            "chess_id": "TH4343",
-            "birthday": "10-11-1977",
-            "points": 0.5
-        },
-        {
-            "name": "Fourth Player",
-            "email": "fourth@gmail.com",
-            "chess_id": "ND5454",
-            "birthday": "09-08-1980",
-            "points": 0.5
-        },
-        {
-            "name": "Fifht Player",
-            "email": "fifth@gmail.com",
-            "chess_id": "FT4433",
-            "birthday": "08-10-1999",
-            "points": 0.0
+            "points": 2.0
         },
         {
             "name": "sixth player",
@@ -56,6 +28,34 @@
             "points": 1.0
         },
         {
+            "name": "Third Player",
+            "email": "third@gmail.com",
+            "chess_id": "TH4343",
+            "birthday": "10-11-1977",
+            "points": 1.5
+        },
+        {
+            "name": "Fourth Player",
+            "email": "fourth@gmail.com",
+            "chess_id": "ND5454",
+            "birthday": "09-08-1980",
+            "points": 1.0
+        },
+        {
+            "name": "Luis Torres",
+            "email": "Luis@gmail.com",
+            "chess_id": "FR3222",
+            "birthday": "11-11-1980",
+            "points": 0.5
+        },
+        {
+            "name": "Fifht Player",
+            "email": "fifth@gmail.com",
+            "chess_id": "FT4433",
+            "birthday": "08-10-1999",
+            "points": 1.0
+        },
+        {
             "name": "eight player",
             "email": "eight@gmail.com",
             "chess_id": "DR2223",
@@ -64,7 +64,7 @@
         }
     ],
     "number_of_rounds": 4,
-    "current_round": 2,
+    "current_round": 3,
     "completed": false,
     "finished": false,
     "rounds": [
@@ -72,15 +72,53 @@
             {
                 "players": [
                     "NH9998",
+                    "SX2333"
+                ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "SV4343",
+                    "TH4343"
+                ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "ND5454",
                     "FR3222"
+                ],
+                "completed": false
+            },
+            {
+                "players": [
+                    "FT4433",
+                    "DR2223"
+                ],
+                "completed": false
+            }
+        ],
+        [
+            {
+                "players": [
+                    "NH9998",
+                    "SX2333"
                 ],
                 "completed": true,
                 "winner": "NH9998"
             },
             {
                 "players": [
-                    "TH4343",
-                    "ND5454"
+                    "SV4343",
+                    "TH4343"
+                ],
+                "completed": true,
+                "winner": "TH4343"
+            },
+            {
+                "players": [
+                    "ND5454",
+                    "FR3222"
                 ],
                 "completed": true,
                 "winner": null
@@ -88,23 +126,13 @@
             {
                 "players": [
                     "FT4433",
-                    "SX2333"
-                ],
-                "completed": true,
-                "winner": "SX2333"
-            },
-            {
-                "players": [
-                    "SV4343",
                     "DR2223"
                 ],
                 "completed": true,
-                "winner": "SV4343"
+                "winner": "FT4433"
             }
         ],
         [],
-        [],
         []
-    ],
-    "filepath": "E:\\GitProjects\\P3-Application-Developer-Skills-Bootcamp\\data\\tournaments\\Newport_Beach_Tournament.json"
+    ]
 }
